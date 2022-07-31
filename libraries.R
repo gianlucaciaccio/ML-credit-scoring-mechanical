@@ -7,6 +7,7 @@ library(biotools) # Box's M-test for homogeneity of covariance matrices
 library(MVN) # Multivariate Normality test (Mardia)
 library(MLmetrics)
 library(tidyverse) # tools for tidy data
+library(cowplot)
 library(themis)
 library(ROSE)
 #### To avoid conflicts among packages ####

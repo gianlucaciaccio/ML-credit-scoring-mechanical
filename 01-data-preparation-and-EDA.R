@@ -121,8 +121,15 @@ indeces <- data_clean %>%
 set.seed(1)
 splitIndex <- createDataPartition(as.factor(indeces), p=0.8, list = FALSE)
 
+# Train
 data_train <- data_clean[ splitIndex, !(colnames(data_clean) %in% c("int.cov"))]
+Ytrain <- data_train$status
+Xtrain <- select(data_train, current.ratio:DPO)
+
+# Test
 data_test  <- data_clean[-splitIndex, !(colnames(data_clean) %in% c("int.cov"))]
+Ytest <- data_test$status
+Xtest <- select(data_test, current.ratio:DPO)
 
 #### See the proportions ####
 table(data_train$status)
@@ -229,5 +236,7 @@ data_train %>%
 
 #### save data ####
 save.image("data-preparation-and-EDA.RData")
-save(list = c("data_clean", "data_train", "data_test", 
-              "indeces", "splitIndex"), file = "split.RData")
+
+save(list = c("data_clean", "data_train", "Ytrain", "Xtrain", 
+              "data_test", "Ytest", "Xtest", "indeces",
+              "splitIndex"), file = "split.RData")

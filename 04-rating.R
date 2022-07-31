@@ -1,29 +1,33 @@
-rm(list = ls())
-load("split.RData")
-rm(list=ls(pattern="train"))
-rm(list=ls(pattern="test"))
-load("GLM-Mods-BEST.RData")
+load("modeling.RData")
+rm(list = ls()[!ls() %in% c("data_clean", "data_train","data_test",
+                            "Xtest", "Ytest", "SVM_LIN2")])
 source("libraries.R")
 library(kableExtra)
 library(paletteer)
 library(santoku)
 conflicted::conflict_prefer("chop", "santoku")
 
+
 #### Calculate 5 class of rating using probabilities of Default ####
 strat_lev <- do.call(paste, c(expand_grid(c('no', 'ne', 'ce', 'su', 'is'),
-                                          c('Q1', 'Q2', 'Q3', 'Q4')),
-                              sep = '-'))
+                                          c('Q1', 'Q2', 'Q3', 'Q4')), sep = '-'))
 
 rating_labels <- c("AAA","BBB","CCC","DDD","EEE")
 descr_labels <- c("Solid","Good","Speculative","Risky","Default")
 
-data_rating <- data_clean %>%
-  mutate(prediction = as.factor(predict(glm_mods_BEST$model,newdata = data_clean)),
-         probability = predict(glm_mods_BEST$model,newdata = data_clean, type = "prob")[,1],
-         rating = factor(ntile(probability, 5),labels = rating_labels),
+bind_rows(data_train,data_test) %>%
+  select(status, province, region, nuts, stratification)
+
+data_rating <- extractProb(list(SVM_LIN2),Xtest,Ytest) %>%
+  select(status = obs, probability = Default, prediction = pred) %>%
+  bind_cols(
+    bind_rows(data_train,data_test) %>%
+      select(id_firm, province, region, nuts, stratification)
+  ) %>%
+  mutate(rating = factor(ntile(probability, 5),labels = rating_labels),
          stratification = factor(stratification, levels = strat_lev),
          description = factor(rating, labels = descr_labels)) %>%
-  select(id_firm, default, status, province, region, nuts, 
+  select(id_firm, status, province, region, nuts, 
          stratification,  prediction, probability, rating,
          description)
 
@@ -37,6 +41,8 @@ score_labels <- levels(chop_quantiles(data_rating$probability, probs_cut))
 
 data_rating$score <- factor(data_rating$rating, labels = score_labels)
 
+
+#### See metrics of SVM_LIN2 on full dataset ####
 confusionMatrix(data_rating$prediction,data_rating$status)
 
 
