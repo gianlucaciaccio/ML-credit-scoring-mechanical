@@ -6,13 +6,13 @@ This repo contains the source code of my project carried out during my academic 
 
 The primary goal of the project is to predict the probability of default of mechanical sector companies in Italy and to create a rating system to rank companies based on their creditworthiness.
 
-## Data
+## Data and Tools
 
 Data was collected from the *[AIDA](https://www.bvdinfo.com/it-it/le-nostre-soluzioni/dati/nazionali/aida)* database, published by *[Bureau van Dijk](https://www.bvdinfo.com/en-gb/)*.
 
 The dataset used for the analysis contains the latest available financial statements (from 2012 to 2017) of 4801 Italian companies in the mechanical sector (*ATECO code: 2562*) with legal status both *"In Bonis"* and *"Failed"*. Firms with no missing values were selected.
 
-
+The analysis was conducted in [R](cran.r-project.org/) using mainly the [`tidyverse`](https://www.tidyverse.org/) and [`caret`](https://topepo.github.io/caret/index.html) libraries
 ## Overview of the analysis:
 
 #### Data preparation and EDA (features engineering)
