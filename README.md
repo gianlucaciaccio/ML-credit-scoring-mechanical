@@ -34,13 +34,13 @@ The analysis was conducted in [R](cran.r-project.org/) using mainly the [`tidyve
 
   - *[Logistic Regression](https://en.wikipedia.org/wiki/Logistic_regression)* and *[Linear Discriminant Analysis](https://en.wikipedia.org/wiki/Linear_discriminant_analysis)* using:
   
-    - *[Stepwise Feature Selection](https://en.wikipedia.org/wiki/Support-vector_machine)*
+    - *[Stepwise Feature Selection](https://en.wikipedia.org/wiki/Stepwise_regression)*
     
     - *[PCA](https://en.wikipedia.org/wiki/Principal_component_analysis) Feature Extraction*
     
     - *L1, L2 and Elastic Net [Regularization](https://en.wikipedia.org/wiki/Shrinkage_(statistics))*
     
-  - *[Decision Tree](https://en.wikipedia.org/wiki/Principal_component_analysis)* and *[Ensemble Models](https://en.wikipedia.org/wiki/Ensemble_learning)*:
+  - *[Decision Tree](https://en.wikipedia.org/wiki/Decision_tree)* and *[Ensemble Models](https://en.wikipedia.org/wiki/Ensemble_learning)*:
    
     - *[CART](https://en.wikipedia.org/wiki/Decision_tree_learning)*
     
